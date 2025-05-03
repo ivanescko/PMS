@@ -7,22 +7,22 @@ namespace PMS.Server.Repositories.UserRepository.Handlers.Queries.GetUser
     /// Обработчик команды <see cref="GetUserQuery"/>.
     /// </summary>
     /// <remarks>
-    /// Преобразует команду в DTO и делегирует запрос на получение данных пользователя в репозиторий.
+    /// Преобразует команду в DTO и делегирует запрос на получение данных в репозиторий.
     /// </remarks>
-    /// <param name="userRepository">Репозиторий реализующий интерфейс <see cref="IUserRepository"/>.</param>
-    public class GetUserQueryHandler(IUserRepository userRepository) : IRequestHandler<GetUserQuery, GetUserResponse>
+    /// <param name="repository">Репозиторий реализующий интерфейс <see cref="IUserRepository"/>.</param>
+    public class GetUserQueryHandler(IUserRepository repository) : IRequestHandler<GetUserQuery, GetUserResponse>
     {
-        private readonly IUserRepository _userRepository = userRepository;
+        private readonly IUserRepository _repository = repository;
 
         /// <summary>
         /// Метод обработки запроса <see cref="GetUserQuery"/>.
         /// </summary>
-        /// <returns>Объект с данными пользователя <see cref="GetUserResponse"/>.</returns>
-        /// <param name="request">Запрос на получение данных пользователя.</param>
+        /// <returns>Объект с данными <see cref="GetUserResponse"/>.</returns>
+        /// <param name="request">Запрос на получение данных.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>        
         public async Task<GetUserResponse> Handle(GetUserQuery request, CancellationToken cancellationToken)
         {
-            return await _userRepository.GetUserByIdAsync(request.Id);
+            return await _repository.GetUserByIdAsync(request.Id);
         }
     }
 }

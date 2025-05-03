@@ -12,9 +12,9 @@ using PMS.Server.DTOs.UserDTO.Commands;
 namespace PMS.Server.Controllers
 {
     /// <summary>
-    /// Контроллер для работы с данными пользователей
+    /// Контроллер для работы с данными пользователей.
     /// </summary>
-    /// <param name="mediator">Медиатор для обработки CQRS запросов</param>
+    /// <param name="mediator">Медиатор для обработки CQRS запросов.</param>
     [Route("api/users")]
     [ApiController]
     [Tags("Users")]
@@ -32,8 +32,8 @@ namespace PMS.Server.Controllers
         /// <param name="id">Идентификатор пользователя.</param>
         /// <returns>Данные пользователя.</returns>
         /// <response code="200">Успешное выполнение.</response>
-        /// <response code="400">Некорректный запрос (id меньше нуля).</response>
-        /// <response code="404">Пользователь не найден.</response>
+        /// <response code="400">Некорректный запрос.</response>
+        /// <response code="404">Ресурс не найден.</response>
         [HttpGet("{id:int}")]
         [ProducesResponseType(typeof(GetUserResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
@@ -52,11 +52,11 @@ namespace PMS.Server.Controllers
         /// Пример запроса:
         /// GET /users
         /// </remarks>
-        /// <returns>Список пользователей</returns>
-        /// <response code="200">Успешное выполнение</response>
+        /// <returns>Список пользователей.</returns>
+        /// <response code="200">Успешное выполнение.</response>
         [HttpGet]
-        [ProducesResponseType(typeof(GetUserResponse), StatusCodes.Status200OK)]
-        public async Task<ActionResult<GetUserResponse[]>> GetUsers()
+        [ProducesResponseType(typeof(GetUserItemResponse[]), StatusCodes.Status200OK)]
+        public async Task<ActionResult<GetUserItemResponse[]>> GetUsers()
         {
             var query = new GetUsersQuery();
             var users = await _mediator.Send(query);
@@ -70,10 +70,10 @@ namespace PMS.Server.Controllers
         /// Пример запроса:
         /// POST /users
         /// </remarks>
-        /// <response code="200">Успешное выполнение</response>
+        /// <response code="200">Успешное выполнение.</response>
         /// <response code="409">Конфликт данных.</response>
         [HttpPost]
-        [ProducesResponseType(typeof(GetUserResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status409Conflict)]
         public async Task<ActionResult> CreateUser([FromBody] CreateUserCommand command)
         {
@@ -89,11 +89,11 @@ namespace PMS.Server.Controllers
         /// PATCH /users/1
         /// </remarks>
         /// <param name="id">Идентификатор пользователя.</param>
-        /// <response code="200">Успешное выполнение</response>
-        /// <response code="404">Пользователь не найден.</response>
+        /// <response code="200">Успешное выполнение.</response>
+        /// <response code="404">Ресурс не найден.</response>
         /// <response code="409">Конфликт данных.</response>       
         [HttpPatch("{id:int}")]
-        [ProducesResponseType(typeof(GetUserResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status409Conflict)]
         public async Task<ActionResult> UpdateUser([FromRoute] int id, [FromBody] UpdateUserRequest request)
@@ -118,10 +118,10 @@ namespace PMS.Server.Controllers
         /// DELETE /users/1
         /// </remarks>
         /// <param name="id">Идентификатор пользователя.</param>
-        /// <response code="200">Успешное выполнение</response>
-        /// <response code="404">Пользователь не найден.</response>
+        /// <response code="200">Успешное выполнение.</response>
+        /// <response code="404">Ресурс не найден.</response>
         [HttpDelete("{id:int}")]
-        [ProducesResponseType(typeof(GetUserResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
         public async Task<ActionResult> DeleteUser([FromRoute] int id)
         {

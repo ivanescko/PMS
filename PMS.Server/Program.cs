@@ -80,15 +80,6 @@ namespace PMS.Server
                 };
             });
 
-            var serviceProvider = builder.Services.BuildServiceProvider();
-            var validators = serviceProvider.GetServices<IValidator>();
-
-            Console.WriteLine("Зарегистрированные валидаторы:");
-            foreach (var validator in validators)
-            {
-                Console.WriteLine(validator.GetType().FullName);
-            }
-
             // Построение приложения
             var app = builder.Build();
 

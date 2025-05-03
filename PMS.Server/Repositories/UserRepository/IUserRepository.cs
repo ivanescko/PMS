@@ -16,7 +16,7 @@ namespace PMS.Server.Repositories.UserRepository
         /// Метод получения списка пользователей.
         /// </summary>
         /// <returns>Список DTO с данными всех пользователей.</returns>
-        Task<List<GetUsersItemResponse>> GetUsersAsync();
+        Task<List<GetUserItemResponse>> GetUsersAsync();
 
         /// <summary>
         /// Метод получения пользователя по идентификатору.

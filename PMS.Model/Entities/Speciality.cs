@@ -1,27 +1,27 @@
 ﻿namespace PMS.Model.Entities
 {
     /// <summary>
-    /// Специальность
+    /// Специальность.
     /// </summary>
     public class Speciality
     {
         /// <summary>
-        /// Уникальный идентификатор специальности
+        /// Идентификатор специальности.
         /// </summary>
         public int SpecialityID { get; set; }
 
         /// <summary>
-        /// Наименование специальности
+        /// Наименование специальности.
         /// </summary>
         public required string Title { get; set; }
 
         /// <summary>
-        /// Описание специальности
+        /// Описание специальности.
         /// </summary>
         public string? Description { get; set; }
 
         /// <summary>
-        /// Список сотрудников
+        /// Список сотрудников.
         /// </summary>
         /// <remarks>
         /// Навигационное свойство представляет связь "один ко многим" с сущностью <see cref="Employee"/>.

@@ -6,21 +6,21 @@ namespace PMS.Server.Repositories.UserRepository.Handlers.Commands.DeleteUser
     /// Обработчик команды <see cref="DeleteUserCommand"/>.
     /// </summary>
     /// <remarks>
-    /// Делегирует удаление пользователя в репозиторий.
+    /// Делегирует удаление в репозиторий.
     /// </remarks>
-    /// <param name="userRepository">Репозиторий реализующий интерфейс <see cref="IUserRepository"/>.</param>ы
-    public class DeleteUserCommandHandler(IUserRepository userRepository) : IRequestHandler<DeleteUserCommand>
+    /// <param name="repository">Репозиторий реализующий интерфейс <see cref="IUserRepository"/>.</param>
+    public class DeleteUserCommandHandler(IUserRepository repository) : IRequestHandler<DeleteUserCommand>
     {
-        private readonly IUserRepository _userRepository = userRepository;
+        private readonly IUserRepository _repository = repository;
 
         /// <summary>
         /// Метод обработки команды <see cref="DeleteUserCommand"/>.
         /// </summary>
-        /// <param name="command">Команда с данными для создания пользователя.</param>
+        /// <param name="command">Команда с данными для удаления.</param>
         /// <param name="cancellationToken">Токен отмены операции.</param>
         public async Task Handle(DeleteUserCommand command, CancellationToken cancellationToken)
         {
-            await _userRepository.DeleteUserAsync(command.Id);
+            await _repository.DeleteUserAsync(command.Id);
         }
     }
 }

@@ -3,7 +3,7 @@
     /// <summary>
     /// DTO элемента списка пользователей.
     /// </summary>
-    public class GetUsersItemResponse
+    public class GetUserItemResponse
     {
         /// <summary>
         /// Уникальный идентификатор пользователя

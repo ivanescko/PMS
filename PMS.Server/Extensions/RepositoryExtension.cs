@@ -1,4 +1,5 @@
-﻿using PMS.Server.Repositories.UserRepository;
+﻿using PMS.Server.Repositories.SpecialityRepository;
+using PMS.Server.Repositories.UserRepository;
 
 namespace PMS.Server.Extensions
 {
@@ -15,6 +16,7 @@ namespace PMS.Server.Extensions
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<ISpecialityRepository, SpecialityRepository>();
             // TODO прочие репозитории добавляются здесь
 
             return services;

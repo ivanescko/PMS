@@ -1,32 +1,26 @@
 ﻿using FluentValidation;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using PMS.Model.Context;
 using PMS.Model.Entities;
 using PMS.Server.DTOs.UserDTO.Commands;
 using PMS.Server.DTOs.UserDTO.Queries;
 using PMS.Server.Exceptions;
-using PMS.Server.Repositories.UserRepository.Handlers.Commands.UpdateUser;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
 
 namespace PMS.Server.Repositories.UserRepository
 {
     /// <summary>
-    /// Репозиторий для работы с пользователями.
+    /// Репозиторий для работы с сущностью <see cref="User"/>.
     /// </summary>
-    /// <remarks>
-    /// Включает в себя методы взаимодействия с сущнсотью <see cref="User"/>.
-    /// </remarks>
     /// <param name="context">Контекст базы данных.</param>
     public class UserRepository(PmsDbContext context) : IUserRepository
     {
         private readonly PmsDbContext _context = context;
 
         /// <inheritdoc/>
-        public async Task<List<GetUsersItemResponse>> GetUsersAsync()
+        public async Task<List<GetUserItemResponse>> GetUsersAsync()
         {
             return await _context.Users
-                .Select(u => new GetUsersItemResponse
+                .Select(u => new GetUserItemResponse
                 {
                     UserID = u.UserID,
                     Name = u.Name,
@@ -58,10 +52,10 @@ namespace PMS.Server.Repositories.UserRepository
         }
 
         /// <inheritdoc/>
-        public async Task CreateUserAsync(CreateUserRequest createUserDto)
+        public async Task CreateUserAsync(CreateUserRequest request)
         {
             // Проверка уникальности логина
-            if (await _context.Users.AnyAsync(u => u.Login == createUserDto.Login))
+            if (await _context.Users.AnyAsync(u => u.Login == request.Login))
             {
                 throw new ConflictException("Пользователь с таким логином уже существует");
             }
@@ -69,10 +63,10 @@ namespace PMS.Server.Repositories.UserRepository
             // Создание объекта пользователя
             User newUser = new User
             {
-                Login = createUserDto.Login,
-                Password = createUserDto.Password,
-                Name = createUserDto.Name,
-                IsActive = createUserDto.IsActive,
+                Login = request.Login,
+                Password = request.Password,
+                Name = request.Name,
+                IsActive = request.IsActive,
                 LastLoginDate = null
             };
 
@@ -86,8 +80,6 @@ namespace PMS.Server.Repositories.UserRepository
             var user = await _context.Users.FindAsync(id);
             if (user == null)
                 throw new NotFoundException("Пользователь не найден");
-
-            
 
             if (request.Login != null)
             {
