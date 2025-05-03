@@ -1,0 +1,23 @@
+﻿using PMS.Server.Repositories.UserRepository;
+
+namespace PMS.Server.Extensions
+{
+    /// <summary>
+    /// Класс расширений для настройки репозиториев CQRS.
+    /// </summary>
+    public static class RepositoryExtension
+    {
+        /// <summary>
+        /// Метод расширения для настройки и регистрации репозиториев CQRS в DI-контейнере.
+        /// </summary>
+        /// <param name="services">Коллекция сервисов для регистрации зависимостей.</param>
+        /// <returns>Коллекция сервисов с зарегистрированными репозиториями CQRS.</returns>
+        public static IServiceCollection AddRepositories(this IServiceCollection services)
+        {
+            services.AddScoped<IUserRepository, UserRepository>();
+            // TODO прочие репозитории добавляются здесь
+
+            return services;
+        }
+    }
+}

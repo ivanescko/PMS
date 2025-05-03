@@ -1,0 +1,8 @@
+cd D:\projects\PMS\PMS.Model
+
+dotnet ef migrations add Initial --startup-project ../PMS.Server
+dotnet ef database update --startup-project ../PMS.Server
+
+D:\programs\PostgreSQL\17\bin\psql.exe -U postgres -d pms -h localhost -f "./SqlScripts/Triggers/01_create_triggers.sql"
+
+GtxtymrJ312

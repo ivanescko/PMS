@@ -1,0 +1,87 @@
+# Общие игнорируемые файлы для всех проектов
+**/.vs/
+**/.vscode/
+**/.idea/
+**/.user
+**/.suo
+**/*.userprefs
+**/*.lock.json
+**/launchSettings.json
+
+# Игнорируемые файлы для серверной части (pms.server)
+pms.server/bin/
+pms.server/obj/
+pms.server/appsettings.Development.json
+pms.server/appsettings.local.json
+
+# Игнорируемые файлы для клиентской части (pms.client)
+pms.client/node_modules/
+pms/client/.env
+pms.client/.env.local
+pms.client/.env.development.local
+pms.client/.env.test.local
+pms.client/.env.production.local
+pms.client/build/
+pms.client/.DS_Store
+pms.client/.cache/
+pms.client/coverage/
+pms.client/.npm
+pms.client/npm-debug.log*
+pms.client/yarn-debug.log*
+pms.client/yarn-error.log*
+
+# Игнорируемые файлы для модели (pms.model)
+pms.model/bin/
+pms.model/obj/
+
+# Общие для .NET
+*.swp
+*.swo
+*.pyc
+*.ncrunchsolution
+*.ncrunchproject
+*.dotCover
+*.pidb
+*.log
+*.bak
+*.cache
+*.orig
+*_ReSharper.*
+*.pdb
+*.pyc
+*.dotCover
+
+# NuGet
+**/[Nn]u[Gg]et.[Ff]allback/
+**/.nuget/
+**/packages/
+*.nupkg
+
+# Временные файлы
+*.tmp
+*.temp
+
+# Файлы резервных копий
+*.bak
+*.gho
+*.ori
+*.orig
+
+# Файлы IDE
+*.sln.iml
+*.csproj.user
+*.jetbrains
+*.resharper
+
+# Файлы операционных систем
+.DS_Store
+Thumbs.db
+
+# Тестовые результаты
+TestResult.xml
+*.trx
+
+# Файлы сборки
+dist/
+out/
+artifacts/
