@@ -1,94 +1,94 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PMS.Server.DTOs.SpecialityDTO.Commands;
-using PMS.Server.DTOs.SpecialityDTO.Queries;
-using PMS.Server.Repositories.SpecialityRepository.Handlers.Commands.CreateSpeciality;
-using PMS.Server.Repositories.SpecialityRepository.Handlers.Commands.DeleteSpeciality;
-using PMS.Server.Repositories.SpecialityRepository.Handlers.Commands.UpdateSpeciality;
-using PMS.Server.Repositories.SpecialityRepository.Handlers.Queries.GetSpecialities;
-using PMS.Server.Repositories.SpecialityRepository.Handlers.Queries.GetSpeciality;
+using PMS.Server.DTOs.DepartmentDTO.Commands;
+using PMS.Server.DTOs.DepartmentDTO.Queries;
+using PMS.Server.Repositories.DepartmentRepository.Handlers.Commands.CreateDepartment;
+using PMS.Server.Repositories.DepartmentRepository.Handlers.Commands.DeleteDepartment;
+using PMS.Server.Repositories.DepartmentRepository.Handlers.Commands.UpdateDepartment;
+using PMS.Server.Repositories.DepartmentRepository.Handlers.Queries.GetDepartment;
+using PMS.Server.Repositories.DepartmentRepository.Handlers.Queries.GetDepartments;
 using PMS.Server.Responses;
 
 namespace PMS.Server.Controllers
 {
     /// <summary>
-    /// Контроллер для работы с данными специальностей.
+    /// Контроллер для работы с данными отдела.
     /// </summary>
     /// <param name="mediator">Медиатор для обработки CQRS запросов.</param>
-    [Route("api/specialities")]
+    [Route("api/departments")]
     [ApiController]
-    [Tags("Specialities")]
-    public class SpecialityController(IMediator mediator) : ControllerBase
+    [Tags("departments")]
+    public class DepartmentController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;
 
         /// <summary>
-        /// Получение данных специальности по ID.
+        /// Получение данных отдела по ID.
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// GET /specialities/1
+        /// GET /departments/1
         /// </remarks>
-        /// <param name="id">Идентификатор специальности.</param>
-        /// <returns>Данные специальности.</returns>
+        /// <param name="id">Идентификатор отдела.</param>
+        /// <returns>Данные отдела.</returns>
         /// <response code="200">Успешное выполнение.</response>
         /// <response code="400">Некорректный запрос.</response>
         /// <response code="404">Ресурс не найден.</response>
         [HttpGet("{id:int}")]
-        [ProducesResponseType(typeof(GetSpecialityResponse), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(GetDepartmentResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<GetSpecialityResponse>> GetSpeciality([FromRoute] int id)
+        public async Task<ActionResult<GetDepartmentResponse>> GetDepartment([FromRoute] int id)
         {
-            var query = new GetSpecialityQuery(id);
-            var speciality = await _mediator.Send(query);
-            return Ok(speciality);
+            var query = new GetDepartmentQuery(id);
+            var department = await _mediator.Send(query);
+            return Ok(department);
         }
 
         /// <summary>
-        /// Получение списка специальностей.
+        /// Получение списка отдела.
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// GET /specialities
+        /// GET /departments
         /// </remarks>
-        /// <returns>Список специальностей.</returns>
+        /// <returns>Список отдела.</returns>
         /// <response code="200">Успешное выполнение.</response>
         [HttpGet]
-        [ProducesResponseType(typeof(GetSpecialityItemResponse[]), StatusCodes.Status200OK)]
-        public async Task<ActionResult<GetSpecialityItemResponse[]>> GetSpecialities()
+        [ProducesResponseType(typeof(GetDepartmentItemResponse[]), StatusCodes.Status200OK)]
+        public async Task<ActionResult<GetDepartmentItemResponse[]>> GetDepartments()
         {
-            var query = new GetSpecialitiesQuery();
-            var specialities = await _mediator.Send(query);
-            return Ok(specialities);
+            var query = new GetDepartmentsQuery();
+            var departments = await _mediator.Send(query);
+            return Ok(departments);
         }
 
         /// <summary>
-        /// Создание специальности.
+        /// Создание отдела.
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// POST /specialities
+        /// POST /departments
         /// </remarks>
         /// <response code="200">Успешное выполнение</response>
         /// <response code="409">Конфликт данных.</response>
         [HttpPost]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status409Conflict)]
-        public async Task<ActionResult> CreateSpeciality([FromBody] CreateSpecialityCommand command)
+        public async Task<ActionResult> CreateDepartment([FromBody] CreateDepartmentCommand command)
         {
             await _mediator.Send(command);
             return Ok();
         }
 
         /// <summary>
-        /// Обновление специальности.
+        /// Обновление отдела.
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// PATCH /specialities/1
+        /// PATCH /departments/1
         /// </remarks>
-        /// <param name="id">Идентификатор специальности.</param>
+        /// <param name="id">Идентификатор отдела.</param>
         /// <response code="200">Успешное выполнение.</response>
         /// <response code="404">Ресурс не найден.</response>
         /// <response code="409">Конфликт данных.</response>       
@@ -96,10 +96,11 @@ namespace PMS.Server.Controllers
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status409Conflict)]
-        public async Task<ActionResult> UpdateSpeciality([FromRoute] int id, [FromBody] UpdateSpecialityRequest request)
+        public async Task<ActionResult> UpdateDepartment([FromRoute] int id, [FromBody] UpdateDepartmentRequest request)
         {
-            var command = new UpdateSpecialityCommand(
+            var command = new UpdateDepartmentCommand(
                 Id: id,
+                Code: request.Code,
                 Title: request.Title,
                 Description: request.Description
             );
@@ -109,21 +110,21 @@ namespace PMS.Server.Controllers
         }
 
         /// <summary>
-        /// Удаление специальности.
+        /// Удаление отдела.
         /// </summary>
         /// <remarks>
         /// Пример запроса:
-        /// DELETE /specialities/1
+        /// DELETE /departments/1
         /// </remarks>
-        /// <param name="id">Идентификатор специальности.</param>
+        /// <param name="id">Идентификатор отдела.</param>
         /// <response code="200">Успешное выполнение.</response>
         /// <response code="404">Ресурс не найден.</response>
         [HttpDelete("{id:int}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(ErrorResponse), StatusCodes.Status404NotFound)]
-        public async Task<ActionResult> DeleteSpeciality([FromRoute] int id)
+        public async Task<ActionResult> DeleteDepartment([FromRoute] int id)
         {
-            var command = new DeleteSpecialityCommand(id);
+            var command = new DeleteDepartmentCommand(id);
             await _mediator.Send(command);
             return Ok();
         }

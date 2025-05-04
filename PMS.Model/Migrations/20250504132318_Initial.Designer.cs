@@ -12,7 +12,7 @@ using PMS.Model.Context;
 namespace PMS.Model.Migrations
 {
     [DbContext(typeof(PmsDbContext))]
-    [Migration("20250501140241_Initial")]
+    [Migration("20250504132318_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace PMS.Model.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "9.0.3")
+                .HasAnnotation("ProductVersion", "9.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);

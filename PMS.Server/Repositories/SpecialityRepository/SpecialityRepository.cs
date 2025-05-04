@@ -3,8 +3,6 @@ using PMS.Model.Context;
 using PMS.Model.Entities;
 using PMS.Server.DTOs.SpecialityDTO.Commands;
 using PMS.Server.DTOs.SpecialityDTO.Queries;
-using PMS.Server.DTOs.UserDTO.Commands;
-using PMS.Server.DTOs.UserDTO.Queries;
 using PMS.Server.Exceptions;
 
 namespace PMS.Server.Repositories.SpecialityRepository
@@ -36,11 +34,11 @@ namespace PMS.Server.Repositories.SpecialityRepository
 
             var speciality = await _context.Specialities
                 .Where(s => s.SpecialityID == id)
-                .Select(u => new GetSpecialityResponse
+                .Select(s => new GetSpecialityResponse
                 {
-                    SpecialityID = u.SpecialityID,
-                    Title = u.Title,
-                    Description = u.Description
+                    SpecialityID = s.SpecialityID,
+                    Title = s.Title,
+                    Description = s.Description
                 })
                 .FirstOrDefaultAsync();
 
@@ -75,7 +73,7 @@ namespace PMS.Server.Repositories.SpecialityRepository
         {
             var speciality = await _context.Specialities.FindAsync(id);
             if (speciality == null)
-                throw new NotFoundException("Специальность не найден");
+                throw new NotFoundException("Специальность не найдена");
 
             if (request.Title != null)
             {
