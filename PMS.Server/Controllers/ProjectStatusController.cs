@@ -17,7 +17,7 @@ namespace PMS.Server.Controllers
     /// <param name="mediator">Медиатор для обработки CQRS запросов.</param>
     [Route("api/projectStatuses")]
     [ApiController]
-    [Tags("ProjectStatuses")]
+    [Tags("Статус проекта")]
     public class ProjectStatusController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;

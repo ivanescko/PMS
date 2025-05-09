@@ -17,7 +17,7 @@ namespace PMS.Server.Controllers
     /// <param name="mediator">Медиатор для обработки CQRS запросов.</param>
     [Route("api/departments")]
     [ApiController]
-    [Tags("departments")]
+    [Tags("Департамент")]
     public class DepartmentController(IMediator mediator) : ControllerBase
     {
         private readonly IMediator _mediator = mediator;

@@ -4,6 +4,7 @@ using PMS.Server.Repositories.ProjectStatusRepository;
 using PMS.Server.Repositories.ProjectTaskCategoryRepository;
 using PMS.Server.Repositories.ProjectTaskStatusRepository;
 using PMS.Server.Repositories.SpecialityRepository;
+using PMS.Server.Repositories.SprintTaskStatusRepository;
 using PMS.Server.Repositories.UserRepository;
 
 namespace PMS.Server.Extensions
@@ -27,6 +28,7 @@ namespace PMS.Server.Extensions
             services.AddScoped<IProjectStatusRepository, ProjectStatusRepository>();
             services.AddScoped<IProjectTaskCategoryRepository, ProjectTaskCategoryRepository>();
             services.AddScoped<IProjectTaskStatusRepository, ProjectTaskStatusRepository>();
+            services.AddScoped<ISprintTaskStatusRepository, SprintTaskStatusRepository>();
             // TODO прочие репозитории добавляются здесь
 
             return services;
