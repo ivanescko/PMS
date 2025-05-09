@@ -54,7 +54,7 @@ namespace PMS.Server.Repositories.ProjectCategoryRepository
             // Проверка уникальности наименования
             if (await _context.ProjectCategories.AnyAsync(pc => pc.Title == request.Title))
             {
-                throw new ConflictException("Специальность с таким наименованием уже существует");
+                throw new ConflictException("Категория с таким наименованием уже существует");
             }
 
             // Создание объекта пользователя
@@ -73,14 +73,14 @@ namespace PMS.Server.Repositories.ProjectCategoryRepository
         {
             var projectCategory = await _context.ProjectCategories.FindAsync(id);
             if (projectCategory == null)
-                throw new NotFoundException("Специальность не найдена");
+                throw new NotFoundException("Категория не найдена");
 
             if (request.Title != null)
             {
                 if (projectCategory.Title != request.Title &&
                     await _context.ProjectCategories.AnyAsync(pc => pc.Title == request.Title))
                 {
-                    throw new ConflictException("Специальность с таким наименованием уже существует");
+                    throw new ConflictException("Категория с таким наименованием уже существует");
                 }
                 projectCategory.Title = request.Title;
             }
@@ -96,7 +96,7 @@ namespace PMS.Server.Repositories.ProjectCategoryRepository
         {
             var projectCategory = await _context.ProjectCategories.FindAsync(id);
             if (projectCategory == null)
-                throw new NotFoundException("Специальность не найдена");
+                throw new NotFoundException("Категория не найдена");
 
             _context.ProjectCategories.Remove(projectCategory);
             await _context.SaveChangesAsync();
