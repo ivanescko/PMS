@@ -19,10 +19,10 @@ namespace PMS.Server.Repositories.ProjectTaskCategoryRepository
         public async Task<List<GetProjectTaskCategoryItemResponse>> GetProjectTaskCategoriesAsync()
         {
             return await _context.ProjectTaskCategories
-                .Select(pc => new GetProjectTaskCategoryItemResponse
+                .Select(ptc => new GetProjectTaskCategoryItemResponse
                 {
-                    ProjectTaskCategoryID = pc.ProjectTaskCategoryID,
-                    Title = pc.Title
+                    ProjectTaskCategoryID = ptc.ProjectTaskCategoryID,
+                    Title = ptc.Title
                 })
                 .ToListAsync();
         }
@@ -32,20 +32,20 @@ namespace PMS.Server.Repositories.ProjectTaskCategoryRepository
         {
             if (id <= 0) throw new BadRequestException("ID must be positive");
 
-            var ProjectTaskCategory = await _context.ProjectTaskCategories
-                .Where(pc => pc.ProjectTaskCategoryID == id)
-                .Select(pc => new GetProjectTaskCategoryResponse
+            var projectTaskCategory = await _context.ProjectTaskCategories
+                .Where(ptc => ptc.ProjectTaskCategoryID == id)
+                .Select(ptc => new GetProjectTaskCategoryResponse
                 {
-                    ProjectTaskCategoryID = pc.ProjectTaskCategoryID,
-                    Title = pc.Title,
-                    Description = pc.Description
+                    ProjectTaskCategoryID = ptc.ProjectTaskCategoryID,
+                    Title = ptc.Title,
+                    Description = ptc.Description
                 })
                 .FirstOrDefaultAsync();
 
-            if (ProjectTaskCategory == null)
+            if (projectTaskCategory == null)
                 throw new NotFoundException("ProjectTaskCategory not found");
             else
-                return ProjectTaskCategory;
+                return projectTaskCategory;
         }
 
         /// <inheritdoc/>
@@ -58,35 +58,35 @@ namespace PMS.Server.Repositories.ProjectTaskCategoryRepository
             }
 
             // Создание объекта пользователя
-            ProjectTaskCategory ProjectTaskCategory = new ProjectTaskCategory
+            ProjectTaskCategory projectTaskCategory = new ProjectTaskCategory
             {
                 Title = request.Title,
                 Description = request.Description,
             };
 
-            await _context.ProjectTaskCategories.AddAsync(ProjectTaskCategory);
+            await _context.ProjectTaskCategories.AddAsync(projectTaskCategory);
             await _context.SaveChangesAsync();
         }
 
         /// <inheritdoc/>
         public async Task UpdateProjectTaskCategoryAsync(int id, UpdateProjectTaskCategoryRequest request)
         {
-            var ProjectTaskCategory = await _context.ProjectTaskCategories.FindAsync(id);
-            if (ProjectTaskCategory == null)
+            var projectTaskCategory = await _context.ProjectTaskCategories.FindAsync(id);
+            if (projectTaskCategory == null)
                 throw new NotFoundException("Категория не найдена");
 
             if (request.Title != null)
             {
-                if (ProjectTaskCategory.Title != request.Title &&
-                    await _context.ProjectTaskCategories.AnyAsync(pc => pc.Title == request.Title))
+                if (projectTaskCategory.Title != request.Title &&
+                    await _context.ProjectTaskCategories.AnyAsync(ptc => ptc.Title == request.Title))
                 {
                     throw new ConflictException("Категория с таким наименованием уже существует");
                 }
-                ProjectTaskCategory.Title = request.Title;
+                projectTaskCategory.Title = request.Title;
             }
 
             if (request.Description != null)
-                ProjectTaskCategory.Description = request.Description;
+                projectTaskCategory.Description = request.Description;
 
             await _context.SaveChangesAsync();
         }
@@ -94,11 +94,11 @@ namespace PMS.Server.Repositories.ProjectTaskCategoryRepository
         /// <inheritdoc/>
         public async Task DeleteProjectTaskCategoryAsync(int id)
         {
-            var ProjectTaskCategory = await _context.ProjectTaskCategories.FindAsync(id);
-            if (ProjectTaskCategory == null)
+            var projectTaskCategory = await _context.ProjectTaskCategories.FindAsync(id);
+            if (projectTaskCategory == null)
                 throw new NotFoundException("Категория не найдена");
 
-            _context.ProjectTaskCategories.Remove(ProjectTaskCategory);
+            _context.ProjectTaskCategories.Remove(projectTaskCategory);
             await _context.SaveChangesAsync();
         }
     }

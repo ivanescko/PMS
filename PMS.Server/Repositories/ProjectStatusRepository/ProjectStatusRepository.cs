@@ -19,10 +19,10 @@ namespace PMS.Server.Repositories.ProjectStatusRepository
         public async Task<List<GetProjectStatusItemResponse>> GetProjectStatusesAsync()
         {
             return await _context.ProjectStatuses
-                .Select(pc => new GetProjectStatusItemResponse
+                .Select(ps => new GetProjectStatusItemResponse
                 {
-                    ProjectStatusID = pc.ProjectStatusID,
-                    Title = pc.Title
+                    ProjectStatusID = ps.ProjectStatusID,
+                    Title = ps.Title
                 })
                 .ToListAsync();
         }
@@ -33,12 +33,12 @@ namespace PMS.Server.Repositories.ProjectStatusRepository
             if (id <= 0) throw new BadRequestException("ID must be positive");
 
             var projectStatus = await _context.ProjectStatuses
-                .Where(pc => pc.ProjectStatusID == id)
-                .Select(pc => new GetProjectStatusResponse
+                .Where(ps => ps.ProjectStatusID == id)
+                .Select(ps => new GetProjectStatusResponse
                 {
-                    ProjectStatusID = pc.ProjectStatusID,
-                    Title = pc.Title,
-                    Description = pc.Description
+                    ProjectStatusID = ps.ProjectStatusID,
+                    Title = ps.Title,
+                    Description = ps.Description
                 })
                 .FirstOrDefaultAsync();
 
@@ -52,7 +52,7 @@ namespace PMS.Server.Repositories.ProjectStatusRepository
         public async Task CreateProjectStatusAsync(CreateProjectStatusRequest request)
         {
             // Проверка уникальности наименования
-            if (await _context.ProjectStatuses.AnyAsync(pc => pc.Title == request.Title))
+            if (await _context.ProjectStatuses.AnyAsync(ps => ps.Title == request.Title))
             {
                 throw new ConflictException("Статус проекта с таким наименованием уже существует");
             }
@@ -78,7 +78,7 @@ namespace PMS.Server.Repositories.ProjectStatusRepository
             if (request.Title != null)
             {
                 if (projectStatus.Title != request.Title &&
-                    await _context.ProjectStatuses.AnyAsync(pc => pc.Title == request.Title))
+                    await _context.ProjectStatuses.AnyAsync(ps => ps.Title == request.Title))
                 {
                     throw new ConflictException("Статус с таким наименованием уже существует");
                 }
