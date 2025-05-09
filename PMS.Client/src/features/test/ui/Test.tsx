@@ -24,7 +24,7 @@ const Test: React.FC = () => {
                             // Добавьте другие заголовки если нужно (например, Authorization)
                         },
                         credentials: "include", // Если нужно отправлять куки/аутентификацию
-                    }
+                    },
                 );
 
                 if (!response.ok) {

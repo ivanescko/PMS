@@ -25,7 +25,7 @@ export default defineConfig({
                 assetFileNames: (assetInfo) => {
                     if (
                         assetInfo.names.some((name) =>
-                            name.match(/\.(woff2?|eot|ttf|otf)$/)
+                            name.match(/\.(woff2?|eot|ttf|otf)$/),
                         )
                     ) {
                         return "fonts/[name][extname]";
