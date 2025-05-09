@@ -12,7 +12,6 @@
 pms.server/bin/
 pms.server/obj/
 pms.server/appsettings.Development.json
-pms.server/appsettings.local.json
 
 # Игнорируемые файлы для клиентской части (pms.client)
 pms.client/node_modules/

@@ -1,0 +1,52 @@
+body {
+    background: var(--background-color-primary);
+    font-family: var(--font-primary);
+    font-weight: var(--font-weight-regular);
+    font-size: var(--font-size-base);
+    color: var(--text-color-primary);
+}
+
+h1 {
+    font-size: var(--font-size-h1);
+    font-weight: var(--font-weight-bold);
+}
+
+h2 {
+    font-size: var(--font-size-h2);
+    font-weight: var(--font-weight-bold);
+}
+
+h3,
+h4 {
+    font-size: var(--font-size-h3);
+    font-weight: var(--font-weight-medium);
+}
+
+p {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-large);
+}
+
+span {
+    font-size: var(--font-size-base);
+}
+
+a {
+    text-decoration: none;
+    color: var(--text-color-primary);
+}
+
+label {
+    font-size: var(--font-size-base);
+}
+
+button {
+    font-family: inherit;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    user-select: none;
+}

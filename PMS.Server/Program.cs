@@ -2,11 +2,9 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
-using Microsoft.Extensions.DependencyInjection;
 using PMS.Server.Exceptions;
 using PMS.Server.Extensions;
 using PMS.Server.Middlewares;
-using PMS.Server.Responses;
 
 namespace PMS.Server
 {
@@ -32,6 +30,19 @@ namespace PMS.Server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Настройка CORS
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+                    policy =>
+                    {
+                        policy.WithOrigins("http://localhost:3000")
+                              .AllowAnyHeader()
+                              .AllowAnyMethod()
+                              .AllowCredentials(); // Если нужно разрешить куки/аутентификацию
+                    });
+            });
 
             // Основные сервисы
             builder.Services.AddControllers(options =>
@@ -92,6 +103,8 @@ namespace PMS.Server
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
             //app.UseRouting(); ?
+
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseAuthorization();
             app.MapControllers();

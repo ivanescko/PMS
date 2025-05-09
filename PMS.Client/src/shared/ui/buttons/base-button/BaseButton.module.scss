@@ -1,0 +1,12 @@
+.customButton {
+    width: 100%;
+    background-color: var(--button-background-color);
+    border-color: var(--button-border-color);
+    color: var(--button-text-color);
+
+    &:hover {
+        background: var(--button-background-hover-color) !important;
+        border-color: var(--button-border-color) !important;
+        color: var(--button-text-hover-color) !important;
+    }
+}

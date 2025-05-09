@@ -1,0 +1,20 @@
+.mainPage {
+    flex-grow: 1;
+    overflow: auto;
+
+    .mainPage_container {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .mainPage_cardContainer {
+            max-width: 100%; //1600px;
+            max-height: 80%;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 30px;
+        }
+    }
+}
