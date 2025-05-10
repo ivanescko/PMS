@@ -1,7 +1,5 @@
-﻿using FluentValidation.AspNetCore;
-using FluentValidation;
-using PMS.Server.Repositories.UserRepository.Handlers.Commands.CreateUser;
-using PMS.Server.Repositories.UserRepository.Handlers.Commands.UpdateUser;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PMS.Server.Extensions
 {
@@ -21,9 +19,13 @@ namespace PMS.Server.Extensions
         /// <returns>Коллекция сервисов с подключенной валидацией CQRS.</returns>
         public static IServiceCollection AddCustomValidation(this IServiceCollection services)
         {
-            services.AddFluentValidationAutoValidation();
-            services.AddFluentValidationClientsideAdapters();
             services.AddValidatorsFromAssembly(typeof(Program).Assembly);
+
+            // Для автоматической валидации моделей
+            services.Configure<ApiBehaviorOptions>(options =>
+            {
+                options.SuppressModelStateInvalidFilter = true;
+            });
 
             return services;
         }

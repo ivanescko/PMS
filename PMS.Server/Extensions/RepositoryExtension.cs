@@ -1,4 +1,5 @@
-﻿using PMS.Server.Repositories.DepartmentRepository;
+﻿using PMS.Server.Repositories.AuthenticationRepository;
+using PMS.Server.Repositories.DepartmentRepository;
 using PMS.Server.Repositories.ProjectCategoryRepository;
 using PMS.Server.Repositories.ProjectStatusRepository;
 using PMS.Server.Repositories.ProjectTaskCategoryRepository;
@@ -23,6 +24,8 @@ namespace PMS.Server.Extensions
         /// <returns>Коллекция сервисов с зарегистрированными репозиториями CQRS.</returns>
         public static IServiceCollection AddRepositories(this IServiceCollection services)
         {
+            services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<ISpecialityRepository, SpecialityRepository>();
             services.AddScoped<IDepartmentRepository, DepartmentRepository>();

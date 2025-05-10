@@ -1,7 +1,10 @@
 
+using System.Text;
 using FluentValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Formatters;
+using Microsoft.IdentityModel.Tokens;
 using PMS.Server.Exceptions;
 using PMS.Server.Extensions;
 using PMS.Server.Middlewares;
@@ -44,6 +47,31 @@ namespace PMS.Server
                     });
             });
 
+            // JWT-аутентификация
+            builder.Services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidateAudience = true,
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+                    ValidateLifetime = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)),
+                    ValidateIssuerSigningKey = true
+                };
+            });
+            
+            // Авторизация
+            builder.Services.AddAuthorization();
+
+
             // Основные сервисы
             builder.Services.AddControllers(options =>
             {
@@ -80,10 +108,10 @@ namespace PMS.Server
                 {
                     // Собираем ошибки из ModelState
                     var errors = context.ModelState
-                        .Where(e => e.Value.Errors.Count > 0)
+                        .Where(e => e.Value != null && e.Value.Errors.Count > 0)
                         .ToDictionary(
                             kvp => kvp.Key,
-                            kvp => kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray()
+                            kvp => kvp.Value != null ? kvp.Value.Errors.Select(e => e.ErrorMessage).ToArray() : []
                         );
 
                     // Бросаем кастомное исключение с ошибками валидации
@@ -102,11 +130,13 @@ namespace PMS.Server
 
             app.UseMiddleware<ErrorHandlingMiddleware>();
 
-            //app.UseRouting(); ?
-
             app.UseCors("AllowSpecificOrigin");
 
+            app.UseRouting();
+
+            app.UseAuthentication();
             app.UseAuthorization();
+
             app.MapControllers();
             app.Run();
         }

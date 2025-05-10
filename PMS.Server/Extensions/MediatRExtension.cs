@@ -12,8 +12,8 @@
         /// <returns>Коллекция сервисов с зарегистрированным экземпляром MediatR.</returns>
         public static IServiceCollection AddMediatRConfiguration(this IServiceCollection services)
         {
-            services.AddMediatR(cfg =>
-                cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
+            services.AddMediatR(config =>
+                config.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
             return services;
         }

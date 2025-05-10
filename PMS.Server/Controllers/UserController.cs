@@ -8,6 +8,7 @@ using PMS.Server.Repositories.UserRepository.Handlers.Commands.CreateUser;
 using PMS.Server.Repositories.UserRepository.Handlers.Commands.UpdateUser;
 using PMS.Server.Repositories.UserRepository.Handlers.Commands.DeleteUser;
 using PMS.Server.DTOs.UserDTO.Commands;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PMS.Server.Controllers
 {
@@ -55,6 +56,7 @@ namespace PMS.Server.Controllers
         /// <returns>Список пользователей.</returns>
         /// <response code="200">Успешное выполнение.</response>
         [HttpGet]
+        [Authorize]
         [ProducesResponseType(typeof(GetUserItemResponse[]), StatusCodes.Status200OK)]
         public async Task<ActionResult<GetUserItemResponse[]>> GetUsers()
         {

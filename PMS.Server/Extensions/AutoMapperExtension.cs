@@ -19,9 +19,9 @@ namespace PMS.Server.Extensions
             IHostEnvironment environment)
         {
             // Подключение всех профилей мапинга в сборке
-            var config = new MapperConfiguration(cfg =>
+            var config = new MapperConfiguration(config =>
             {
-                cfg.AddMaps(Assembly.GetExecutingAssembly());
+                config.AddMaps(Assembly.GetExecutingAssembly());
             });
 
             // Проверка валидности мапингов
